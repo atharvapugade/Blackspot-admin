@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
+
 
 export default function AddBlackspot() {
   const [name, setName] = useState("");
@@ -11,10 +12,17 @@ export default function AddBlackspot() {
   const [latitude, setLatitude] = useState("");
   const [longitude, setLongitude] = useState("");
   const [radius, setRadius] = useState("");
+  const [adminEmail, setAdminEmail] = useState("");
+  const [adminPass, setAdminPass] = useState("");
   const router = useRouter();
 
-  const adminEmail = localStorage.getItem("adminEmail");
-  const adminPass = localStorage.getItem("adminPass");
+  // Only access localStorage on client
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      setAdminEmail(localStorage.getItem("adminEmail") || "");
+      setAdminPass(localStorage.getItem("adminPass") || "");
+    }
+  }, []);
 
   const saveBlackspot = async () => {
     if (!name || !reason || !latitude || !longitude || !radius) {
