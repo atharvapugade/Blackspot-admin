@@ -137,102 +137,14 @@ export default function BlackspotsList() {
                     </div>
                 ) : (
                     <div className="overflow-hidden">
-                        {/* Table Header */}
-                        <div className="bg-blue-50 px-6 py-4 border-b border-blue-200">
-                            <div className="grid grid-cols-12 gap-4 font-semibold text-blue-800">
-                                <div className="col-span-3">Name</div>
-                                <div className="col-span-3">Reason</div>
-                                <div className="col-span-2">Location</div>
-                                <div className="col-span-2">Radius</div>
-                                <div className="col-span-2">Actions</div>
-                            </div>
-                        </div>
+                        import { Suspense } from "react";
+                        import BlackspotsList from "./BlackspotsList";
 
-                        {/* Table Body */}
-                        <div className="divide-y divide-blue-100">
-                            {filteredBlackspots.map((b) => (
-                                <div key={b.id} className="px-6 py-4 hover:bg-blue-50/50 transition-colors">
-                                    <div className="grid grid-cols-12 gap-4 items-center">
-                                        <div className="col-span-3">
-                                            <h3 className="font-semibold text-blue-800">{b.name}</h3>
-                                        </div>
-                                        <div className="col-span-3">
-                                            <p className="text-blue-600 text-sm">{b.reason}</p>
-                                        </div>
-                                        <div className="col-span-2">
-                                            <div className="text-xs text-blue-500">
-                                                <div>Lat: {b.latitude}</div>
-                                                <div>Lng: {b.longitude}</div>
-                                            </div>
-                                        </div>
-                                        <div className="col-span-2">
-                                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                                {b.radius}m
-                                            </span>
-                                        </div>
-                                        <div className="col-span-2">
-                                            <div className="flex gap-2">
-                                                <button
-                                                    onClick={() => router.push(`/admin/edit?id=${b.id}`)}
-                                                    className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-1.5 px-3 rounded-lg transition-colors duration-200 text-sm flex items-center space-x-1"
-                                                >
-                                                    <span>Edit</span>
-                                                </button>
-                                                <button
-                                                    onClick={() => {
-                                                        setSelectedId(b.id);
-                                                        setShowConfirm(true);
-                                                    }}
-                                                    className="bg-red-500 hover:bg-red-600 text-white font-medium py-1.5 px-3 rounded-lg transition-colors duration-200 text-sm flex items-center space-x-1"
-                                                >
-                                                    <span>Delete</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-            </div>
+                        export default function Page() {
+                          return (
+                            <Suspense fallback={<div>Loading...</div>}>
+                              <BlackspotsList />
+                            </Suspense>
+                          );
+                        }
 
-            {/* Delete Confirmation Modal - Centered on viewport */}
-            {showConfirm && (
-                <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]">
-                    <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl p-8 shadow-2xl border border-blue-100 max-w-md w-full mx-4 z-[101]">
-                        <div className="text-center mb-6">
-                            <h2 className="text-xl font-bold text-blue-800 mb-2">Confirm Delete</h2>
-                            <p className="text-blue-600">
-                                Are you sure you want to delete this blackspot? This action cannot be undone.
-                            </p>
-                        </div>
-
-                        <div className="flex gap-3">
-                            <button
-                                onClick={() => {
-                                    setShowConfirm(false);
-                                    setSelectedId(null);
-                                }}
-                                className="flex-1 py-3 px-4 border border-blue-300 text-blue-700 rounded-lg hover:bg-blue-50 transition-colors duration-200"
-                            >
-                                Cancel
-                            </button>
-
-                            <button
-                                onClick={async () => {
-                                    await deleteBlackspot(selectedId);
-                                    setShowConfirm(false);
-                                    setSelectedId(null);
-                                }}
-                                className="flex-1 bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200"
-                            >
-                                Delete
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </>
-    );
-}

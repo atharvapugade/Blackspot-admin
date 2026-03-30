@@ -43,6 +43,9 @@ export default function AdminLogin() {
 
       // Success
       alert("Admin Login Successful");
+      // Store credentials in localStorage for dashboard check
+      localStorage.setItem("adminEmail", normalizedEmail);
+      localStorage.setItem("adminPass", password);
       router.push("/admin/dashboard");
 
     } catch (error) {
