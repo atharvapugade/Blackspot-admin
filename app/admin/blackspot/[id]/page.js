@@ -205,11 +205,9 @@ export default function BlackspotDetails() {
                 <div className="bg-white rounded-xl shadow-lg border border-blue-100 overflow-hidden">
                     {/* Table Header */}
                     <div className="bg-blue-50 px-6 py-4 border-b border-blue-200">
-                        <div className="grid grid-cols-6 gap-3 font-semibold text-blue-800 text-sm">
+                        <div className="grid grid-cols-4 gap-3 font-semibold text-blue-800 text-sm">
                             <div className="col-span-1">User/Device ID</div>
                             <div className="col-span-1">Contact Info</div>
-                            <div className="col-span-1">IP Address</div>
-                            <div className="col-span-1">Speed</div>
                             <div className="col-span-1">Time</div>
                             <div className="col-span-1">Status</div>
                         </div>
@@ -227,25 +225,13 @@ export default function BlackspotDetails() {
                             
                             return (
                                 <div key={detection.id} className="px-6 py-4 hover:bg-blue-50/50 transition-colors border-b border-blue-100">
-                                    <div className="grid grid-cols-6 gap-3 items-center text-sm">
+                                    <div className="grid grid-cols-4 gap-3 items-center text-sm">
                                         <div className="col-span-1">
                                             <p className="text-blue-800 font-medium">{displayName}</p>
                                             <p className="text-xs text-blue-500">{isRegisteredUser ? "Registered" : "Unregistered"}</p>
                                         </div>
                                         <div className="col-span-1">
                                             <p className="text-blue-600 break-all">{displayEmail}</p>
-                                        </div>
-                                        <div className="col-span-1">
-                                            <p className="text-blue-600 font-mono text-xs">{detection.ipAddress || "N/A"}</p>
-                                        </div>
-                                        <div className="col-span-1">
-                                            <span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-bold ${
-                                                isOverSpeeding 
-                                                  ? "bg-red-100 text-red-800" 
-                                                  : "bg-blue-100 text-blue-800"
-                                            }`}>
-                                                {speedValue} km/h
-                                            </span>
                                         </div>
                                         <div className="col-span-1">
                                             <p className="text-blue-600 text-xs">{date.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true })}</p>
